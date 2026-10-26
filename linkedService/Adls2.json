@@ -1,0 +1,10 @@
+{
+	"name": "Adls2",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://hospitalkadata.dfs.core.windows.net/"
+		}
+	}
+}
