@@ -17,7 +17,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select table_id from ctrl.table_config where is_active=1 AND source_system='neon_postgres'",
+						"sqlReaderQuery": {
+							"value": "select table_id from ctrl.table_config where is_active=1 AND source_system='@{pipeline().parameters.source_system}'",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -27,8 +30,57 @@
 					},
 					"firstRowOnly": false
 				}
+			},
+			{
+				"name": "Ingest all tables",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Read data of metadata",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Read data of metadata').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "item",
+								"value": {
+									"value": "@string(item().table_id)",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
 			}
 		],
+		"parameters": {
+			"source_system": {
+				"type": "string",
+				"defaultValue": "neon_postgres"
+			}
+		},
+		"variables": {
+			"item": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
