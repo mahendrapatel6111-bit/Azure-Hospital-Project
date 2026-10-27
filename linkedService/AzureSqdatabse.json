@@ -1,0 +1,23 @@
+{
+	"name": "AzureSqdatabse",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "hospitalkaserver.database.windows.net",
+			"database": "hospitalk",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "hospital",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sqldtabsemetadata"
+			}
+		}
+	}
+}
