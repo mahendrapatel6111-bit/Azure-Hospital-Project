@@ -1,0 +1,98 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "Hospital-Data-Ingestion069"
+		},
+		"Adls2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://hospitalkadata.dfs.core.windows.net/"
+		},
+		"AzureSqdatabse_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "hospitalkaserver.database.windows.net"
+		},
+		"AzureSqdatabse_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "hospitalk"
+		},
+		"AzureSqdatabse_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "hospital"
+		},
+		"ls_AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://Hospitalkeyvalut.vault.azure.net/"
+		},
+		"ls_PostgreSql1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "ep-young-credit-b5ev4ynx-pooler.c-7.us-east-2.aws.neon.tech"
+		},
+		"ls_PostgreSql1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "neondb"
+		},
+		"ls_PostgreSql1_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "neondb_owner"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "Hospital-Data-Ingestion069_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"Adls2_properties_typeProperties_url": {
+						"value": "[parameters('Adls2_properties_typeProperties_url')]"
+					},
+					"ls_AzureKeyVault1_properties_typeProperties_baseUrl": {
+						"value": "[parameters('ls_AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
+					"AzureSqdatabse_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqdatabse_properties_typeProperties_server')]"
+					},
+					"AzureSqdatabse_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqdatabse_properties_typeProperties_database')]"
+					},
+					"AzureSqdatabse_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqdatabse_properties_typeProperties_userName')]"
+					},
+					"ls_PostgreSql1_properties_typeProperties_server": {
+						"value": "[parameters('ls_PostgreSql1_properties_typeProperties_server')]"
+					},
+					"ls_PostgreSql1_properties_typeProperties_database": {
+						"value": "[parameters('ls_PostgreSql1_properties_typeProperties_database')]"
+					},
+					"ls_PostgreSql1_properties_typeProperties_username": {
+						"value": "[parameters('ls_PostgreSql1_properties_typeProperties_username')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
