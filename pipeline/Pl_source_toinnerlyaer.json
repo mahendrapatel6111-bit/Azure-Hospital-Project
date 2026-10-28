@@ -8,7 +8,7 @@
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
-					"retry": 0,
+					"retry": 2,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -30,11 +30,36 @@
 					},
 					"firstRowOnly": false
 				}
+			},
+			{
+				"name": "Set Start time",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "time",
+					"value": {
+						"value": "@formatDateTime(utcNow(),'yyyy-MM-ddThh:mm:ss')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
 			"table_id": {
 				"type": "string"
+			},
+			"Start_time": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"time": {
+				"type": "String"
 			}
 		},
 		"annotations": []
